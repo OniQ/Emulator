@@ -6,8 +6,8 @@
 
 package emulator.gui;
 
+import emulator.vm.ButtonHandler;
 import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
-import emulator.vm.ProgramLoader;
 import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -18,10 +18,13 @@ import javax.swing.JFileChooser;
  */
 public class VM extends javax.swing.JFrame {
     JFileChooser fc = new JFileChooser(); 
+    ButtonHandler buttonsHandler;
     /**
      * Creates new form VM
+     * @param handler
      */ 
-    public VM() {
+    public VM(ButtonHandler handler) {
+        buttonsHandler = handler;
         initComponents();
         initMemory();
         fc.setCurrentDirectory(new File("data"));
@@ -411,27 +414,27 @@ public class VM extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadActionPerformed
-            int returnVal = fc.showOpenDialog(this); 
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                final File file = fc.getSelectedFile();
-                ProgramLoader.loadToMemory(this, file);
-            }
+        int returnVal = fc.showOpenDialog(this); 
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            final File file = fc.getSelectedFile();
+            buttonsHandler.load(this, file);
+        }
     }//GEN-LAST:event_jButtonLoadActionPerformed
 
     private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
-        // TODO add your handling code here:
+        buttonsHandler.reload(this);
     }//GEN-LAST:event_jButtonReloadActionPerformed
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        // TODO add your handling code here:
+        //buttonsHandler.back();
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void jButtonForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonForwardActionPerformed
-        // TODO add your handling code here:
+        //buttonsHandler.next();
     }//GEN-LAST:event_jButtonForwardActionPerformed
 
     private void jButtonRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunActionPerformed
-        // TODO add your handling code here:
+        //buttonsHandler.runApp();
     }//GEN-LAST:event_jButtonRunActionPerformed
 
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed

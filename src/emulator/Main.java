@@ -18,5 +18,8 @@ public class Main {
         VMController vmc;
         vmc = new VMController();
         vmc.run();
+//        VMController vmc2;
+//        vmc2 = new VMController();
+//        vmc2.run();
     }
 }

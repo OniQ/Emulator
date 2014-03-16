@@ -13,6 +13,7 @@ import java.util.zip.DataFormatException;
  * @author Oni-Q
  */
 public class ProgramLoader {
+    
     static public void loadToMemory(VM vm, File file){
         try {
             Scanner fileScan = new Scanner(new BufferedReader(

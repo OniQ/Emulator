@@ -17,17 +17,15 @@ public class Registers {
     private byte[] D;
     private byte[] IC;
     private boolean C;
-    private final VM vm;
     
-    public Registers(VM vm){
+    public Registers(){
         R = new byte[4];
         D = new byte[4];
         IC = new byte[2];
         C = false;
-        this.vm = vm;
     }
     
-    public void setReg(String reg, boolean value){
+    public void setReg(VM vm, String reg, boolean value){
         if(reg.equals("C")){
             C = value;
             vm.setC(C);
@@ -37,7 +35,7 @@ public class Registers {
         }
     }
     
-    public void setReg(String reg, byte[] value){
+    public void setReg(VM vm, String reg, byte[] value){
         switch (reg){
             case("R"):
                 if (value.length == 4){
@@ -89,5 +87,4 @@ public class Registers {
     public boolean getC() {
         return C;
     }
-    
 }
