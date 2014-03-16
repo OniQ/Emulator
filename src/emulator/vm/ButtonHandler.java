@@ -30,6 +30,10 @@ public class ButtonHandler{
         }
     }
     
+    public void inputData(String data){
+        vmc.exe.inputData(data);
+    }
+    
     public void runApp(){
         vmc.exe.run();
     }

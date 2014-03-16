@@ -1,5 +1,8 @@
 package emulator.vm;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Oni-Q
@@ -21,6 +24,9 @@ public class Executor {
     
     public void next(){
         if (!"HALT".equals(command)){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) { }
             int adress = Integer.parseInt(vmc.registers.getIC(), 16);
             command = Memory.getMemory(vmc.vm, adress);
             vmc.comInter.execute(command);
@@ -34,5 +40,10 @@ public class Executor {
     
     public void back(){
         
+    }
+
+    public synchronized void inputData(String data) {
+        command = data;
+        vmc.comInter.execute(command);
     }
 }

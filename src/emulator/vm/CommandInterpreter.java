@@ -6,6 +6,10 @@
 
 package emulator.vm;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Oni-Q
@@ -18,20 +22,28 @@ public class CommandInterpreter {
         this.vmc = vmc;
     }
     
+    public void toNext(){
+        int newAdress = Integer.parseInt(vmc.registers.getIC(), 16);
+        newAdress = newAdress < 255 ? (newAdress + 1) : 0;
+        vmc.registers.setReg("IC", String.valueOf(newAdress));
+    }
+    
     public void execute(String command){
         String opcode = command.substring(0, 2);
-        String adressHex = command.substring(2, 4);  
-        int adress;
+        String adress = command.substring(2, 4);
         switch(opcode){
             case("PD"):
-                adress = Integer.parseInt(adressHex, 16);
+                //adress = Integer.parseInt(adressHex, 16);
                 vmc.vm.writeToConsole(Memory.getMemory(vmc.vm, adress));
                 break;
             case("LD"):
-                adress = Integer.parseInt(adressHex, 16);
+                //adress = Integer.parseInt(adressHex, 16);
                 break;
             case("GD"):
-                vmc.vm.writeToConsole(vmc.newLine);
+                String data = vmc.vm.readData();
+                vmc.vm.writeToConsole(vmc.newLine + data + vmc.newLine);
+                //adress = Integer.parseInt(adressHex, 16);
+                Memory.setMemory(vmc.vm, adress, data);
                 break;
             case("HA"):
                 vmc.vm.writeToConsole(vmc.newLine + "Program terminated");
@@ -41,9 +53,7 @@ public class CommandInterpreter {
                 break;
             default:
                 System.err.println("Unsupported command: " + command);
-        }
-        int newAdress = Integer.parseInt(vmc.registers.getIC(), 16);
-        newAdress = newAdress < 255 ? (newAdress + 1) : 0;
-        vmc.registers.setReg("IC", String.valueOf(newAdress));
+        } 
+        toNext();
     }
 }

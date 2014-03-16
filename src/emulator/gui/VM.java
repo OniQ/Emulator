@@ -12,6 +12,10 @@ import java.awt.Font;
 import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -38,6 +42,17 @@ public class VM extends javax.swing.JFrame {
         memoryBuffer[adress] = word;
         String data = String.format("%02X: %s", adress & 0xFF, memoryBuffer[adress]);
         listModel.setElementAt(data, adress);
+    }
+    
+    public void setMemory(String adressHex, String word){
+        int adress = Integer.parseInt(adressHex, 16);
+        memoryBuffer[adress] = word;
+        String data = String.format("%02X: %s", adress & 0xFF, memoryBuffer[adress]);
+        listModel.setElementAt(data, adress);
+    }
+    
+    public String getMemory(String adress){
+        return getMemory(Integer.parseInt(adress, 16));
     }
     
     public String getMemory(int adress){
@@ -426,7 +441,8 @@ public class VM extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRunActionPerformed
 
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
-        this.writeToConsole(input.getText());//remove later
+        //this.writeToConsole(input.getText());//remove later
+        buttonsHandler.inputData(input.getText());
         input.setText("");
         
     }//GEN-LAST:event_inputActionPerformed
@@ -437,6 +453,28 @@ public class VM extends javax.swing.JFrame {
     
     public void clearConsole(){
         output.setText(""); 
+    }
+    
+    public String readData(){
+        String[] options = {"OK"};
+        JPanel panel = new JPanel();
+        //JLabel lbl = new JLabel("");
+        JTextField txt = new JTextField(4);
+        //panel.add(lbl);
+        panel.add(txt);
+        int selectedOption = JOptionPane.showOptionDialog(null, panel, "Input", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+        String data = "";
+        if(selectedOption == 0)
+        {
+            data = txt.getText();
+            while (data.length() < 4){
+                data = "0" + data;
+            }
+            if(data.length() > 4){
+                data = data.substring(0, 4);
+            }
+        }
+        return data;
     }
     
     public void run() {
