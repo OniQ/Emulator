@@ -1,6 +1,6 @@
 package emulator.vm;
 
-import static emulator.gui.VM.vm;
+import emulator.gui.VM;
 
 /**
  *
@@ -9,7 +9,7 @@ import static emulator.gui.VM.vm;
 public class Memory {
     public static final int VIRTUAL_MEMORY_SIZE = 256;
     
-    public void setMemory(int adress, String word){
+    public static void setMemory(VM vm, int adress, String word){
         if (word.length() != 4){
             System.err.println("Word must be 4 bytes");
             return;
@@ -22,7 +22,7 @@ public class Memory {
         }
     }
     
-    public String getMemory(int adress){
+    public static String getMemory(VM vm, int adress){
         String word = null;
         try{
             word = vm.getMemory(adress);

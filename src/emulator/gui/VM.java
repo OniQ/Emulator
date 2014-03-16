@@ -50,6 +50,29 @@ public class VM extends javax.swing.JFrame {
         }
         listMemory.setModel(listModel);
     }
+    
+    public void setD(byte[] value){
+        D1.setText(String.valueOf(value[0]));
+        D2.setText(String.valueOf(value[1]));
+        D3.setText(String.valueOf(value[2]));
+        D4.setText(String.valueOf(value[3]));
+    }
+    
+    public void setR(byte[] value) {
+        R1.setText(String.valueOf(value[0]));
+        R2.setText(String.valueOf(value[1]));
+        R3.setText(String.valueOf(value[2]));
+        R4.setText(String.valueOf(value[3]));
+    }
+
+    public void setIC(byte[] value) {
+        IC1.setText(String.valueOf(value[0]));
+        IC2.setText(String.valueOf(value[1]));
+    }
+    
+    public void setC(boolean value) {
+        C.setText(String.valueOf(value));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -237,7 +260,7 @@ public class VM extends javax.swing.JFrame {
 
         C.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         C.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        C.setText("True");
+        C.setText("true");
         C.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout panelRegistersLayout = new javax.swing.GroupLayout(panelRegisters);
@@ -250,8 +273,7 @@ public class VM extends javax.swing.JFrame {
                     .addGroup(panelRegistersLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(C, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(C, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelRegistersLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -334,24 +356,23 @@ public class VM extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(input)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButtonLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButtonReload, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(panelRegisters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButtonForward, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonReload, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelRegisters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonForward, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -401,7 +422,7 @@ public class VM extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRunActionPerformed
 
     
-    public static VM vm = new VM();
+    private static VM vm = new VM();
     /**
      * @param args the command line arguments
      */
@@ -430,10 +451,11 @@ public class VM extends javax.swing.JFrame {
         //</editor-fold>
         
         
-        final VMController vmc = new VMController();
+        final VMController vmc = new VMController(vm);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                vm.setLocationRelativeTo(null);
                 vm.setVisible(true);
                 vmc.run();
             }
@@ -468,4 +490,5 @@ public class VM extends javax.swing.JFrame {
     private javax.swing.JTextArea output;
     private javax.swing.JPanel panelRegisters;
     // End of variables declaration//GEN-END:variables
+
 }
