@@ -347,6 +347,11 @@ public class VM extends javax.swing.JFrame {
         jScrollPane2.setViewportView(output);
 
         input.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        input.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -421,7 +426,15 @@ public class VM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRunActionPerformed
 
-    
+    private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
+        this.writeToConsole(input.getText());//remove later
+        input.setText("");
+        
+    }//GEN-LAST:event_inputActionPerformed
+
+    public void writeToConsole(String line){
+        output.append(line + '\n'); 
+    }
     private static VM vm = new VM();
     /**
      * @param args the command line arguments

@@ -33,5 +33,7 @@ public class VMController{
         registers.setReg("C", false);
         System.out.println(registers.getR()[3]);
         System.out.println(s);
+        vm.writeToConsole("wnjeoginwoihgnowbhowbnhownohg");
+        vm.writeToConsole("-------------------");
     }
 }
