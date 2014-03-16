@@ -17,10 +17,15 @@ public class VMController{
     final VM vm;
     final Registers registers;
     final ButtonHandler hButtons;
+    final CommandInterpreter comInter;
+    final Executor exe;
+    final String newLine = System.getProperty("line.separator");
     
     public VMController(){
-        registers = new Registers();
-        hButtons = new ButtonHandler(registers);
+        registers = new Registers(this);
+        comInter = new CommandInterpreter(this);
+        hButtons = new ButtonHandler(this);
+        exe = new Executor(this);
         vm = new VM(hButtons);
         
     }
@@ -31,14 +36,12 @@ public class VMController{
     }
     
     private void test(){
-        Memory.setMemory(vm ,5, "2222");
+        Memory.setMemory(vm , 5, "2222");
         String s = Memory.getMemory(vm, 5);
-        registers.setReg(vm, "R", new byte[]{1, 2, 3, 4});
-        registers.setReg(vm, "C", false);
-        registers.setReg(vm, "D", new byte[]{7, 7, 7, 7});
+        registers.setReg("R", new String[]{"1", "2", "3", "4"});
+        registers.setReg("C", false);
+        registers.setReg("D", new String[]{"7", "7", "7", "7"});
         System.out.println(registers.getR()[3]);
         System.out.println(s);
-        vm.writeToConsole("wnjeoginwoihgnowbhowbnhownohg");
-        vm.writeToConsole("-------------------");
     }
 }

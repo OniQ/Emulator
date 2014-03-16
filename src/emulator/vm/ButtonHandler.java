@@ -1,6 +1,5 @@
 package emulator.vm;
 
-import emulator.gui.VM;
 import static emulator.vm.ProgramLoader.loadToMemory;
 import java.io.File;
 
@@ -10,23 +9,36 @@ import java.io.File;
  */
 public class ButtonHandler{
     
-    Registers registers;
+    VMController vmc;
     private File file;
     
-    ButtonHandler(Registers registers){
-        this.registers = registers;
+    
+    ButtonHandler(VMController vmc){
+        this.vmc = vmc; 
     }
             
-    public void load(VM vm, File file){
+    public void load(File file){
         this.file = file;
-        loadToMemory(vm, file);
+        loadToMemory(vmc.vm, file);
     }
     
-    public void reload(VM vm){
+    public void reload(){
         if (file != null){
-            registers.setReg(vm, "IC", new byte[]{0, 0});
-            loadToMemory(vm, file);
+            vmc.registers.setReg("IC", String.valueOf(0));
+            loadToMemory(vmc.vm, file);
+            vmc.exe.restart();
         }
     }
     
+    public void runApp(){
+        vmc.exe.run();
+    }
+    
+    public void next(){
+        vmc.exe.next();
+    }
+    
+    public void back(){
+        vmc.exe.back();
+    }
 }

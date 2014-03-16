@@ -8,6 +8,7 @@ package emulator.gui;
 
 import emulator.vm.ButtonHandler;
 import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
+import java.awt.Font;
 import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -35,14 +36,14 @@ public class VM extends javax.swing.JFrame {
     
     public void setMemory(int adress, String word){
         memoryBuffer[adress] = word;
-        String data = String.format("%03d: %s", adress, memoryBuffer[adress]);
-            listModel.setElementAt(data, adress);
+        String data = String.format("%02X: %s", adress & 0xFF, memoryBuffer[adress]);
+        listModel.setElementAt(data, adress);
     }
     
     public String getMemory(int adress){
         String word;
         word = (String) listModel.get(adress);
-        word = word.split(" ")[1];
+        word = word.substring(4);
         return word;
     }
     
@@ -51,29 +52,29 @@ public class VM extends javax.swing.JFrame {
         
         for (int i = 0; i < VIRTUAL_MEMORY_SIZE; i++){
             memoryBuffer[i] = "0000";
-            String data = String.format("%03d: %s", i, memoryBuffer[i]);
+            String data = String.format("%02X: %s", i & 0xFF, memoryBuffer[i]);
+            //String data = String.format("%03d: %s", i, memoryBuffer[i]);
             listModel.addElement(data);
         }
         listMemory.setModel(listModel);
     }
     
-    public void setD(byte[] value){
-        D1.setText(String.valueOf(value[0]));
-        D2.setText(String.valueOf(value[1]));
-        D3.setText(String.valueOf(value[2]));
-        D4.setText(String.valueOf(value[3]));
+    public void setD(String[] value){
+        D4.setText(value[0]);
+        D3.setText(value[1]);
+        D2.setText(value[2]);
+        D1.setText(value[3]);
     }
     
-    public void setR(byte[] value) {
-        R1.setText(String.valueOf(value[0]));
-        R2.setText(String.valueOf(value[1]));
-        R3.setText(String.valueOf(value[2]));
-        R4.setText(String.valueOf(value[3]));
+    public void setR(String[] value) {
+        R4.setText(value[0]);
+        R3.setText(value[1]);
+        R2.setText(value[2]);
+        R1.setText(value[3]);
     }
 
-    public void setIC(byte[] value) {
-        IC1.setText(String.valueOf(value[0]));
-        IC2.setText(String.valueOf(value[1]));
+    public void setIC(String value) { 
+        IC1.setText(value);
     }
     
     public void setC(boolean value) {
@@ -108,7 +109,6 @@ public class VM extends javax.swing.JFrame {
         D3 = new javax.swing.JTextField();
         D2 = new javax.swing.JTextField();
         D1 = new javax.swing.JTextField();
-        IC2 = new javax.swing.JTextField();
         IC1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -162,7 +162,7 @@ public class VM extends javax.swing.JFrame {
         });
 
         listMemory.setBackground(new java.awt.Color(204, 255, 255));
-        listMemory.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        listMemory.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
         listMemory.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listMemory.setToolTipText("");
         listMemory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -179,7 +179,7 @@ public class VM extends javax.swing.JFrame {
         R4.setEditable(false);
         R4.setForeground(new java.awt.Color(0, 51, 51));
         R4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        R4.setText("00");
+        R4.setText("0");
         R4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         R4.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         R4.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -187,7 +187,7 @@ public class VM extends javax.swing.JFrame {
         R3.setEditable(false);
         R3.setForeground(new java.awt.Color(0, 51, 51));
         R3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        R3.setText("00");
+        R3.setText("0");
         R3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         R3.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         R3.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -195,7 +195,7 @@ public class VM extends javax.swing.JFrame {
         R2.setEditable(false);
         R2.setForeground(new java.awt.Color(0, 51, 51));
         R2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        R2.setText("00");
+        R2.setText("0");
         R2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         R2.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         R2.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -203,7 +203,7 @@ public class VM extends javax.swing.JFrame {
         R1.setEditable(false);
         R1.setForeground(new java.awt.Color(0, 51, 51));
         R1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        R1.setText("00");
+        R1.setText("0");
         R1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         R1.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         R1.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -214,7 +214,7 @@ public class VM extends javax.swing.JFrame {
         D4.setEditable(false);
         D4.setForeground(new java.awt.Color(0, 51, 51));
         D4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D4.setText("00");
+        D4.setText("0");
         D4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         D4.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         D4.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -222,7 +222,7 @@ public class VM extends javax.swing.JFrame {
         D3.setEditable(false);
         D3.setForeground(new java.awt.Color(0, 51, 51));
         D3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D3.setText("00");
+        D3.setText("0");
         D3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         D3.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         D3.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -230,7 +230,7 @@ public class VM extends javax.swing.JFrame {
         D2.setEditable(false);
         D2.setForeground(new java.awt.Color(0, 51, 51));
         D2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D2.setText("00");
+        D2.setText("0");
         D2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         D2.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         D2.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -238,23 +238,15 @@ public class VM extends javax.swing.JFrame {
         D1.setEditable(false);
         D1.setForeground(new java.awt.Color(0, 51, 51));
         D1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D1.setText("00");
+        D1.setText("0");
         D1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         D1.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         D1.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        IC2.setEditable(false);
-        IC2.setForeground(new java.awt.Color(0, 51, 51));
-        IC2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        IC2.setText("00");
-        IC2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        IC2.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        IC2.setSelectionColor(new java.awt.Color(240, 240, 240));
-
         IC1.setEditable(false);
         IC1.setForeground(new java.awt.Color(0, 51, 51));
         IC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        IC1.setText("00");
+        IC1.setText("0");
         IC1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         IC1.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         IC1.setSelectionColor(new java.awt.Color(240, 240, 240));
@@ -267,7 +259,7 @@ public class VM extends javax.swing.JFrame {
 
         C.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         C.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        C.setText("true");
+        C.setText("false");
         C.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout panelRegistersLayout = new javax.swing.GroupLayout(panelRegisters);
@@ -305,9 +297,7 @@ public class VM extends javax.swing.JFrame {
             .addGroup(panelRegistersLayout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(IC2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(IC1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(IC1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         panelRegistersLayout.setVerticalGroup(
@@ -331,14 +321,13 @@ public class VM extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelRegistersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(IC2)
                     .addComponent(IC1)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelRegistersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(C)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         output.setEditable(false);
@@ -346,7 +335,6 @@ public class VM extends javax.swing.JFrame {
         output.setColumns(20);
         output.setForeground(new java.awt.Color(153, 255, 0));
         output.setRows(5);
-        output.setText("$:");
         output.setToolTipText("");
         output.setCaretColor(new java.awt.Color(153, 255, 51));
         output.setSelectedTextColor(new java.awt.Color(0, 0, 153));
@@ -417,24 +405,24 @@ public class VM extends javax.swing.JFrame {
         int returnVal = fc.showOpenDialog(this); 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             final File file = fc.getSelectedFile();
-            buttonsHandler.load(this, file);
+            buttonsHandler.load(file);
         }
     }//GEN-LAST:event_jButtonLoadActionPerformed
 
     private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
-        buttonsHandler.reload(this);
+        buttonsHandler.reload();
     }//GEN-LAST:event_jButtonReloadActionPerformed
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        //buttonsHandler.back();
+        buttonsHandler.back();
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void jButtonForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonForwardActionPerformed
-        //buttonsHandler.next();
+        buttonsHandler.next();
     }//GEN-LAST:event_jButtonForwardActionPerformed
 
     private void jButtonRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunActionPerformed
-        //buttonsHandler.runApp();
+        buttonsHandler.runApp();
     }//GEN-LAST:event_jButtonRunActionPerformed
 
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
@@ -444,8 +432,12 @@ public class VM extends javax.swing.JFrame {
     }//GEN-LAST:event_inputActionPerformed
 
     public void writeToConsole(String line){
-        output.append(line + '\n'); 
+        output.append(line); 
     } 
+    
+    public void clearConsole(){
+        output.setText(""); 
+    }
     
     public void run() {
         /* Set the Nimbus look and feel */
@@ -482,7 +474,6 @@ public class VM extends javax.swing.JFrame {
     private javax.swing.JTextField D3;
     private javax.swing.JTextField D4;
     private javax.swing.JTextField IC1;
-    private javax.swing.JTextField IC2;
     private javax.swing.JTextField R1;
     private javax.swing.JTextField R2;
     private javax.swing.JTextField R3;
