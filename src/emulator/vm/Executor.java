@@ -1,8 +1,5 @@
 package emulator.vm;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Oni-Q
@@ -28,14 +25,17 @@ public class Executor {
                 Thread.sleep(1);
             } catch (InterruptedException ex) { }
             int adress = Integer.parseInt(vmc.registers.getIC(), 16);
+            vmc.vm.setSelected(adress);
             command = Memory.getMemory(vmc.vm, adress);
             vmc.comInter.execute(command);
+            vmc.comInter.toNext();
         }
     }
     
     public void restart(){
         command = "";
         vmc.vm.clearConsole();
+        vmc.vm.setSelected(0);
     }
     
     public void back(){

@@ -8,14 +8,16 @@ package emulator.gui;
 
 import emulator.vm.ButtonHandler;
 import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
-import java.awt.Font;
 import java.io.File;
 import javax.swing.DefaultListModel;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  *
@@ -46,9 +48,7 @@ public class VM extends javax.swing.JFrame {
     
     public void setMemory(String adressHex, String word){
         int adress = Integer.parseInt(adressHex, 16);
-        memoryBuffer[adress] = word;
-        String data = String.format("%02X: %s", adress & 0xFF, memoryBuffer[adress]);
-        listModel.setElementAt(data, adress);
+        setMemory(adress, word);
     }
     
     public String getMemory(String adress){
@@ -455,11 +455,16 @@ public class VM extends javax.swing.JFrame {
         output.setText(""); 
     }
     
+    public void setSelected(int id){
+        listMemory.setSelectedIndex(id);
+    }
+    
     public String readData(){
         String[] options = {"OK"};
         JPanel panel = new JPanel();
         //JLabel lbl = new JLabel("");
         JTextField txt = new JTextField(4);
+        txt.addAncestorListener( new RequestFocusListener() );
         //panel.add(lbl);
         panel.add(txt);
         int selectedOption = JOptionPane.showOptionDialog(null, panel, "Input", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
@@ -500,6 +505,7 @@ public class VM extends javax.swing.JFrame {
             @Override
             public void run() {
                 setLocationRelativeTo(null);
+                input.requestFocus();
                 setVisible(true);
             }
         });
@@ -534,4 +540,46 @@ public class VM extends javax.swing.JFrame {
     private javax.swing.JPanel panelRegisters;
     // End of variables declaration//GEN-END:variables
 
+}
+
+class RequestFocusListener implements AncestorListener
+{
+	private boolean removeListener;
+
+	/*
+	 *  Convenience constructor. The listener is only used once and then it is
+	 *  removed from the component.
+	 */
+	public RequestFocusListener()
+	{
+		this(true);
+	}
+
+	/*
+	 *  Constructor that controls whether this listen can be used once or
+	 *  multiple times.
+	 *
+	 *  @param removeListener when true this listener is only invoked once
+	 *                        otherwise it can be invoked multiple times.
+	 */
+	public RequestFocusListener(boolean removeListener)
+	{
+		this.removeListener = removeListener;
+	}
+
+	@Override
+	public void ancestorAdded(AncestorEvent e)
+	{
+		JComponent component = e.getComponent();
+		component.requestFocusInWindow();
+
+		if (removeListener)
+			component.removeAncestorListener( this );
+	}
+
+	@Override
+	public void ancestorMoved(AncestorEvent e) {}
+
+	@Override
+	public void ancestorRemoved(AncestorEvent e) {} 
 }

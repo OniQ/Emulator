@@ -35,14 +35,18 @@ public class ButtonHandler{
     }
     
     public void runApp(){
-        vmc.exe.run();
+        if (file != null){
+            vmc.exe.run();
+        }
     }
     
     public void next(){
-        vmc.exe.next();
+        if (file != null)
+            vmc.exe.next();
     }
     
     public void back(){
-        vmc.exe.back();
+        if (file != null)
+            vmc.exe.back();
     }
 }
