@@ -17,12 +17,13 @@ public class VMController{
     final VM vm;
     private final Registers registers;
     
-    public VMController(VM _vm){
-        vm = _vm;
+    public VMController(){
+        vm = new VM();
         registers = new Registers(vm);
     }
     
     public void run(){
+        vm.run();
         test();
     }
     

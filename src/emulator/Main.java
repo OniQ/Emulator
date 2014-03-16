@@ -6,7 +6,6 @@
 
 package emulator;
 
-import emulator.gui.VM;
 import emulator.vm.VMController;
 
 /**
@@ -15,13 +14,11 @@ import emulator.vm.VMController;
  */
 public class Main {
     
-    private static VMController vmc;
-    private static VM vm;
+    private static VMController vmc; 
     
     public static void main(String args[]) {
-        vmc = new VMController(vm);
-        vm = new VM(vmc);
-        vm.run();
+        vmc = new VMController(); 
+        vmc.run();
     }
 
     public Main() {

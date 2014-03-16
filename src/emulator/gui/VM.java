@@ -7,7 +7,6 @@
 package emulator.gui;
 
 import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
-import emulator.vm.VMController;
 import javax.swing.DefaultListModel;
 
 /**
@@ -18,15 +17,13 @@ public class VM extends javax.swing.JFrame {
 
     /**
      * Creates new form VM
-     */
-    final VMController vmc;
-    public VM(VMController vmc) {
+     */ 
+    public VM() {
         initComponents();
         initMemory();
-        this.vmc = vmc;
     }
     
-    private DefaultListModel listModel = new DefaultListModel();
+    private final DefaultListModel listModel = new DefaultListModel();
     private String[] memoryBuffer;
     
     public void setMemory(int adress, String word){
@@ -437,9 +434,7 @@ public class VM extends javax.swing.JFrame {
     public void writeToConsole(String line){
         output.append(line + '\n'); 
     }
-    /**
-     * @param args the command line arguments
-     */
+    
     public void run() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -453,13 +448,7 @@ public class VM extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -470,7 +459,6 @@ public class VM extends javax.swing.JFrame {
             public void run() {
                 setLocationRelativeTo(null);
                 setVisible(true);
-                vmc.run();
             }
         });
     }
