@@ -7,20 +7,24 @@
 package emulator.gui;
 
 import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
+import emulator.vm.ProgramLoader;
+import java.io.File;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author Oni-Q
  */
 public class VM extends javax.swing.JFrame {
-
+    JFileChooser fc = new JFileChooser(); 
     /**
      * Creates new form VM
      */ 
     public VM() {
         initComponents();
         initMemory();
+        fc.setCurrentDirectory(new File("data"));
     }
     
     private final DefaultListModel listModel = new DefaultListModel();
@@ -82,6 +86,7 @@ public class VM extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jButtonLoad = new javax.swing.JButton();
         jButtonReload = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
@@ -109,7 +114,7 @@ public class VM extends javax.swing.JFrame {
         output = new javax.swing.JTextArea();
         input = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Virtual Machine");
         setResizable(false);
 
@@ -406,7 +411,11 @@ public class VM extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadActionPerformed
-        // TODO add your handling code here:
+            int returnVal = fc.showOpenDialog(this); 
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                final File file = fc.getSelectedFile();
+                ProgramLoader.loadToMemory(this, file);
+            }
     }//GEN-LAST:event_jButtonLoadActionPerformed
 
     private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
@@ -433,7 +442,7 @@ public class VM extends javax.swing.JFrame {
 
     public void writeToConsole(String line){
         output.append(line + '\n'); 
-    }
+    } 
     
     public void run() {
         /* Set the Nimbus look and feel */
@@ -481,6 +490,7 @@ public class VM extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLoad;
     private javax.swing.JButton jButtonReload;
     private javax.swing.JButton jButtonRun;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

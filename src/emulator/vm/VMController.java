@@ -15,7 +15,7 @@ import emulator.gui.VM;
 public class VMController{
     
     final VM vm;
-    private final Registers registers;
+    final Registers registers;
     
     public VMController(){
         vm = new VM();

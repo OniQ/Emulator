@@ -14,14 +14,9 @@ import emulator.vm.VMController;
  */
 public class Main {
     
-    private static VMController vmc; 
-    
     public static void main(String args[]) {
-        vmc = new VMController(); 
+        VMController vmc;
+        vmc = new VMController();
         vmc.run();
-    }
-
-    public Main() {
-        
     }
 }
