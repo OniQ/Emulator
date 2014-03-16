@@ -19,9 +19,11 @@ public class VM extends javax.swing.JFrame {
     /**
      * Creates new form VM
      */
-    public VM() {
+    final VMController vmc;
+    public VM(VMController vmc) {
         initComponents();
         initMemory();
+        this.vmc = vmc;
     }
     
     private DefaultListModel listModel = new DefaultListModel();
@@ -435,11 +437,10 @@ public class VM extends javax.swing.JFrame {
     public void writeToConsole(String line){
         output.append(line + '\n'); 
     }
-    private static VM vm = new VM();
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void run() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -462,14 +463,13 @@ public class VM extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        
-        final VMController vmc = new VMController(vm);
+         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                vm.setLocationRelativeTo(null);
-                vm.setVisible(true);
+                setLocationRelativeTo(null);
+                setVisible(true);
                 vmc.run();
             }
         });
