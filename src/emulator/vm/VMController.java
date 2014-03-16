@@ -31,6 +31,7 @@ public class VMController{
         String s = Memory.getMemory(vm, 5);
         registers.setReg("R", new byte[]{1, 2, 3, 4});
         registers.setReg("C", false);
+        registers.setReg("D", new byte[]{7, 7, 7, 7});
         System.out.println(registers.getR()[3]);
         System.out.println(s);
         vm.writeToConsole("wnjeoginwoihgnowbhowbnhownohg");
