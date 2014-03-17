@@ -36,7 +36,8 @@ public class CommandInterpreter {
                     vmc.vm.writeToConsole(Memory.getMemory(vmc.vm, adress));
                     break;
                 case("LD"):
-                    //adress = Integer.parseInt(adressHex, 16);
+                    String memory = Memory.getMemory(vmc.vm, adress);
+                    vmc.registers.setReg("R", memory);
                     break;
                 case("GD"):
                     String data = vmc.vm.readData();

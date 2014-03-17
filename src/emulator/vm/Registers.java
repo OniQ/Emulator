@@ -6,8 +6,6 @@
 
 package emulator.vm; 
 
-import emulator.gui.VM;
-
 /**
  *
  * @author Oni-Q
@@ -21,8 +19,8 @@ public class Registers {
     
     public Registers(VMController vmc){
         this.vmc = vmc;
-        R = new String[4];
-        D = new String[4];
+        R = new String[]{"0", "0", "0", "0"};
+        D = new String[]{"0", "0", "0", "0"};
         IC = "0";
         C = false;
     }
@@ -39,25 +37,12 @@ public class Registers {
     
     public void setReg(String reg, String value){
         switch (reg){
-            case("IC"):
-                String data = String.format("%02X", Integer.parseInt(value) & 0xFF);
-                IC = data;
-                vmc.vm.setIC(IC);
-                break;
-            default:
-                System.err.println(reg + " value must not be single string");
-                break;
-        }
-    }
-    
-    public void setReg(String reg, String[] value){
-        switch (reg){
             case("R"):
-                if (value.length == 4){
-                    R[0] = value[0];
-                    R[1] = value[1];
-                    R[2] = value[2];
-                    R[3] = value[3];
+                if (value.length() == 4){
+                    R[0] = String.valueOf(value.charAt(0));
+                    R[1] = String.valueOf(value.charAt(1));
+                    R[2] = String.valueOf(value.charAt(2));
+                    R[3] = String.valueOf(value.charAt(3));
                     vmc.vm.setR(R);
                 }
                 else{
@@ -65,11 +50,11 @@ public class Registers {
                 }
                 break;
             case("D"):
-                if (value.length == 4){
-                    D[0] = value[0];
-                    D[1] = value[1];
-                    D[2] = value[2];
-                    D[3] = value[3];
+                if (value.length() == 4){
+                    D[0] = String.valueOf(value.charAt(0));
+                    D[1] = String.valueOf(value.charAt(1));
+                    D[2] = String.valueOf(value.charAt(2));
+                    D[3] = String.valueOf(value.charAt(3));
                     vmc.vm.setD(D);
                 }
                 else{
@@ -79,17 +64,22 @@ public class Registers {
             case("C"):
                 System.err.println(reg + " value must be boolean");
                 break;
+            case("IC"):
+                String data = String.format("%02X", Integer.parseInt(value) & 0xFF);
+                IC = data;
+                vmc.vm.setIC(IC);
+                break;
             default:
                 System.err.println("No register named " + reg);
         }
     }
 
-    public String[] getR() {
-        return R;
+    public String getR() {
+        return R[0] + R[1] + R[2] + R[3];
     }
 
-    public String[] getD() {
-        return D;
+    public String getD() {
+        return D[0] + D[1] + D[2] + D[3];
     }
 
     public String getIC() {

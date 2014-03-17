@@ -36,12 +36,10 @@ public class VMController{
     }
     
     private void test(){
-        Memory.setMemory(vm , 5, "2222");
-        String s = Memory.getMemory(vm, 5);
-        registers.setReg("R", new String[]{"1", "2", "3", "4"});
-        registers.setReg("C", false);
-        registers.setReg("D", new String[]{"7", "7", "7", "7"});
-        System.out.println(registers.getR()[3]);
-        System.out.println(s);
+//        Memory.setMemory(vm , 5, "2222");
+//        String s = Memory.getMemory(vm, 5);
+//        registers.setReg("C", false);
+//        System.out.println(registers.getR());
+//        System.out.println(s);
     }
 }
