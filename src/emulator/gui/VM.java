@@ -7,6 +7,7 @@
 package emulator.gui;
 
 import emulator.vm.ButtonHandler;
+import emulator.vm.Data;
 import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
 import java.io.File;
 import javax.swing.DefaultListModel;
@@ -14,7 +15,6 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -26,24 +26,26 @@ import javax.swing.event.AncestorListener;
 public class VM extends javax.swing.JFrame {
     JFileChooser fc = new JFileChooser(); 
     ButtonHandler buttonsHandler;
+    Data data;
     /**
      * Creates new form VM
      * @param handler
+     * @param data
      */ 
-    public VM(ButtonHandler handler) {
+    public VM(ButtonHandler handler, Data data) {
         buttonsHandler = handler;
+        this.data = data;
         initComponents();
         initMemory();
         fc.setCurrentDirectory(new File("data"));
     }
     
     private final DefaultListModel listModel = new DefaultListModel();
-    private String[] memoryBuffer;
     
     public void setMemory(int adress, String word){
-        memoryBuffer[adress] = word;
-        String data = String.format("%02X: %s", adress & 0xFF, memoryBuffer[adress]);
-        listModel.setElementAt(data, adress);
+        this.data.memoryBuffer[adress] = word;
+        String _data = String.format("%02X: %s", adress & 0xFF, this.data.memoryBuffer[adress]);
+        listModel.setElementAt(_data, adress);
     }
     
     public void setMemory(String adressHex, String word){
@@ -63,13 +65,13 @@ public class VM extends javax.swing.JFrame {
     }
     
     private void initMemory(){
-        memoryBuffer = new String[VIRTUAL_MEMORY_SIZE];
+        data.memoryBuffer = new String[VIRTUAL_MEMORY_SIZE];
         
         for (int i = 0; i < VIRTUAL_MEMORY_SIZE; i++){
-            memoryBuffer[i] = "0000";
-            String data = String.format("%02X: %s", i & 0xFF, memoryBuffer[i]);
+            data.memoryBuffer[i] = "0000";
+            String _data = String.format("%02X: %s", i & 0xFF, data.memoryBuffer[i]);
             //String data = String.format("%03d: %s", i, memoryBuffer[i]);
-            listModel.addElement(data);
+            listModel.addElement(_data);
         }
         listMemory.setModel(listModel);
     }
@@ -468,18 +470,18 @@ public class VM extends javax.swing.JFrame {
         //panel.add(lbl);
         panel.add(txt);
         int selectedOption = JOptionPane.showOptionDialog(null, panel, "Input", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
-        String data = "";
+        String _data = "";
         if(selectedOption == 0)
         {
-            data = txt.getText();
-            while (data.length() < 4){
-                data = "0" + data;
+            _data = txt.getText();
+            while (_data.length() < 4){
+                _data = "0" + _data;
             }
-            if(data.length() > 4){
-                data = data.substring(0, 4);
+            if(_data.length() > 4){
+                _data = _data.substring(0, 4);
             }
         }
-        return data;
+        return _data;
     }
     
     public void run() {

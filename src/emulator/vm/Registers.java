@@ -12,23 +12,21 @@ package emulator.vm;
  */
 public class Registers {
     VMController vmc;
-    private final String[] R;
-    private final String[] D;
-    private String IC;
-    private boolean C;
-    
-    public Registers(VMController vmc){
-        this.vmc = vmc;
-        R = new String[]{"0", "0", "0", "0"};
-        D = new String[]{"0", "0", "0", "0"};
-        IC = "0";
-        C = false;
+    private final Data data;
+
+    Registers(VMController aThis, Data _data) {
+        this.vmc = aThis;
+        this.data = _data;
+        data.R = new String[]{"0", "0", "0", "0"};
+        data.D = new String[]{"0", "0", "0", "0"};
+        data.IC = "0";
+        data.C = false;
     }
     
     public void setReg(String reg, boolean value){
         if(reg.equals("C")){
-            C = value;
-            vmc.vm.setC(C);
+            data.C = value;
+            vmc.vm.setC(data.C);
         }
         else{
             System.err.println("No register named " + reg);
@@ -39,11 +37,11 @@ public class Registers {
         switch (reg){
             case("R"):
                 if (value.length() == 4){
-                    R[0] = String.valueOf(value.charAt(0));
-                    R[1] = String.valueOf(value.charAt(1));
-                    R[2] = String.valueOf(value.charAt(2));
-                    R[3] = String.valueOf(value.charAt(3));
-                    vmc.vm.setR(R);
+                    data.R[0] = String.valueOf(value.charAt(0));
+                    data.R[1] = String.valueOf(value.charAt(1));
+                    data.R[2] = String.valueOf(value.charAt(2));
+                    data.R[3] = String.valueOf(value.charAt(3));
+                    vmc.vm.setR(data.R);
                 }
                 else{
                     System.err.println(reg + "size must be 4");
@@ -51,11 +49,11 @@ public class Registers {
                 break;
             case("D"):
                 if (value.length() == 4){
-                    D[0] = String.valueOf(value.charAt(0));
-                    D[1] = String.valueOf(value.charAt(1));
-                    D[2] = String.valueOf(value.charAt(2));
-                    D[3] = String.valueOf(value.charAt(3));
-                    vmc.vm.setD(D);
+                    data.D[0] = String.valueOf(value.charAt(0));
+                    data.D[1] = String.valueOf(value.charAt(1));
+                    data.D[2] = String.valueOf(value.charAt(2));
+                    data.D[3] = String.valueOf(value.charAt(3));
+                    vmc.vm.setD(data.D);
                 }
                 else{
                     System.err.println(reg + "size must be 4");
@@ -65,9 +63,9 @@ public class Registers {
                 System.err.println(reg + " value must be boolean");
                 break;
             case("IC"):
-                String data = String.format("%02X", Integer.parseInt(value) & 0xFF);
-                IC = data;
-                vmc.vm.setIC(IC);
+                String _data = String.format("%02X", Integer.parseInt(value) & 0xFF);
+                data.IC = _data;
+                vmc.vm.setIC(data.IC);
                 break;
             default:
                 System.err.println("No register named " + reg);
@@ -75,18 +73,18 @@ public class Registers {
     }
 
     public String getR() {
-        return R[0] + R[1] + R[2] + R[3];
+        return data.R[0] + data.R[1] + data.R[2] + data.R[3];
     }
 
     public String getD() {
-        return D[0] + D[1] + D[2] + D[3];
+        return data.D[0] + data.D[1] + data.D[2] + data.D[3];
     }
 
     public String getIC() {
-        return IC;
+        return data.IC;
     }
 
     public boolean getC() {
-        return C;
+        return data.C;
     }
 }

@@ -20,13 +20,15 @@ public class VMController{
     final CommandInterpreter comInter;
     final Executor exe;
     final String newLine = System.getProperty("line.separator");
+    Data data;
     
     public VMController(){
-        registers = new Registers(this);
+        data = new Data();
+        registers = new Registers(this, data);
         comInter = new CommandInterpreter(this);
         hButtons = new ButtonHandler(this);
         exe = new Executor(this);
-        vm = new VM(hButtons);
+        vm = new VM(hButtons, data);
         
     }
     
