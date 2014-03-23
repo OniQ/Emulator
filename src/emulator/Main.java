@@ -1,6 +1,8 @@
 package emulator;
 
+import emulator.rm.RMController;
 import emulator.vm.VMController;
+import java.util.ArrayList;
 
 /**
  *
@@ -9,11 +11,10 @@ import emulator.vm.VMController;
 public class Main {
     
     public static void main(String args[]) {
-        VMController vmc;
-        vmc = new VMController();
-        vmc.run();
-//        VMController vmc2;
-//        vmc2 = new VMController();
-//        vmc2.run();
+        ArrayList<VMController> vmcs = new ArrayList<>();
+        VMController vmc = new VMController();
+        vmcs.add(vmc);
+        RMController rmc = new RMController(vmcs);
+        rmc.run();
     }
 }
