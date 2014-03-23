@@ -69,8 +69,8 @@ public class Registers {
                 System.err.println(reg + " value must be boolean");
                 break;
             case("IC"):
-                String _data = String.format("%02X", Integer.parseInt(value) & 0xFF);
-                data.IC = _data;
+                //String _data = String.format("%03X", Integer.parseInt(value, 16) & 0xFFF);
+                data.IC = value;
                 rmc.rm.setIC(data.IC);
                 break;
             default:

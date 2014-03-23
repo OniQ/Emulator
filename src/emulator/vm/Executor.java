@@ -44,6 +44,11 @@ public class Executor {
 
     public synchronized void inputData(String data) {
         command = data;
-        vmc.comInter.execute(command);
+        try{
+            vmc.comInter.execute(command);
+        }
+        catch(NumberFormatException e){
+            System.err.println(e.getMessage());
+        }
     }
 }

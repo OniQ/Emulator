@@ -6,6 +6,8 @@
 
 package emulator.vm;
 
+import emulator.rm.RMController;
+
 /**
  *
  * @author DELL
@@ -16,4 +18,5 @@ public class Data {
     public String[] D;
     public String IC;
     public boolean C;
+    public static RMController rmc;
 }

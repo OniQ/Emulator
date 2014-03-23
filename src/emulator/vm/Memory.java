@@ -1,7 +1,7 @@
 package emulator.vm;
 
 import emulator.gui.VM;
-import emulator.rm.RMController;
+import static emulator.vm.Data.rmc;
 
 /**
  *
@@ -9,7 +9,6 @@ import emulator.rm.RMController;
  */
 public class Memory {
     public static final int VIRTUAL_MEMORY_SIZE = 256;
-    public static RMController rmc;
     
     public static void setMemory(VMController vmc, int adress, String word){
         if (word.length() != 4){

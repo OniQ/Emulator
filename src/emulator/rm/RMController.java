@@ -8,7 +8,6 @@ package emulator.rm;
 
 import emulator.gui.RM;
 import static emulator.gui.RM.MEMORY_SIZE;
-import static emulator.vm.Memory.rmc;
 import emulator.vm.VMController;
 import java.util.ArrayList;
 
@@ -23,7 +22,7 @@ public class RMController {
     Integer[] blocks = new Integer[16];
     RM rm = new RM();
     Data data = new Data();
-    Registers registers;
+    public Registers registers;
     
     public RMController(ArrayList<VMController> _vmcs){
         pts = new ArrayList<>();
@@ -40,7 +39,7 @@ public class RMController {
     }
     
     public void run(){
-        rmc = this;
+        emulator.vm.Data.rmc = this;
         int ptBlock = MEMORY_SIZE;
         rm.run();
         for(VMController ctrl : vmcs){
