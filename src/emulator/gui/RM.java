@@ -6,6 +6,7 @@
 
 package emulator.gui;
 
+import static emulator.rm.Memory.memoryBuffer;
 import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
 import java.awt.Color;
 import javax.swing.DefaultListModel;
@@ -17,7 +18,6 @@ import javax.swing.DefaultListModel;
  */
 public class RM extends javax.swing.JFrame {
 
-    private String[] memoryBuffer;
     private final DefaultListModel listModel = new DefaultListModel();
     public static final int MEMORY_SIZE = VIRTUAL_MEMORY_SIZE + 64;
     
@@ -26,12 +26,10 @@ public class RM extends javax.swing.JFrame {
         initMemory();
     }
     
-    private void initMemory(){
-        
-        memoryBuffer = new String[MEMORY_SIZE];
+    private void initMemory(){ 
         
         for (int i = 0; i < MEMORY_SIZE; i++){
-            memoryBuffer[i] = "0000";
+            memoryBuffer[i] = null;
             String _data = String.format("%03X: %s", i & 0xFFF, memoryBuffer[i]);
             listModel.addElement(_data);
         }
@@ -40,7 +38,7 @@ public class RM extends javax.swing.JFrame {
     
     public void setMemory(int adress, String word){
         memoryBuffer[adress] = word;
-        String _data = String.format("%02X: %s", adress & 0xFF, memoryBuffer[adress]);
+        String _data = String.format("%03X: %s", adress & 0xFFF, memoryBuffer[adress]);
         listModel.setElementAt(_data, adress);
     }
     
@@ -56,7 +54,9 @@ public class RM extends javax.swing.JFrame {
     public String getMemory(int adress){
         String word;
         word = (String) listModel.get(adress);
-        word = word.substring(4);
+        word = word.substring(5);
+        if (word.equals("null"))
+            return null;
         return word;
     }
     

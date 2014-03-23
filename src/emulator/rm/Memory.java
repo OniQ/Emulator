@@ -1,6 +1,7 @@
 package emulator.rm;
 
 import emulator.gui.RM;
+import static emulator.gui.RM.MEMORY_SIZE;
 
 /**
  *
@@ -8,6 +9,7 @@ import emulator.gui.RM;
  */
 public class Memory {
     public static final int VIRTUAL_MEMORY_SIZE = 256;
+    public static String[] memoryBuffer = new String[MEMORY_SIZE];
     
     public static void setMemory(RM rm, int adress, String word){
         if (word.length() != 4){

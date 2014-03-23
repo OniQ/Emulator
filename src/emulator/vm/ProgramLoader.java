@@ -14,7 +14,7 @@ import java.util.zip.DataFormatException;
  */
 public class ProgramLoader {
     
-    static public void loadToMemory(VM vm, File file){
+    static public void loadToMemory(VMController vmc, File file){
         try {
             Scanner fileScan = new Scanner(new BufferedReader(
                     new FileReader(file)));
@@ -32,7 +32,7 @@ public class ProgramLoader {
                     throw new DataFormatException("Wrong code");
                 }
                 else{
-                    vm.setMemory(adress, command);
+                    Memory.setMemory(vmc, adress, command);
                     adress++;
                 }
             }

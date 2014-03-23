@@ -42,7 +42,7 @@ public class CommandInterpreter {
                 case("GD"):
                     String data = vmc.vm.readData();
                     vmc.vm.writeToConsole(": " + data + vmc.newLine);
-                    Memory.setMemory(vmc.vm, adress, data);
+                    Memory.setMemory(vmc, adress, data);
                     break;
                 case("HA"):
                     vmc.vm.writeToConsole(vmc.newLine + "Program terminated");

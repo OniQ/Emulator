@@ -19,13 +19,13 @@ public class ButtonHandler{
             
     public void load(File file){
         this.file = file;
-        loadToMemory(vmc.vm, file);
+        loadToMemory(vmc, file);
     }
     
     public void reload(){
         if (file != null){
             vmc.registers.setReg("IC", String.valueOf(0));
-            loadToMemory(vmc.vm, file);
+            loadToMemory(vmc, file);
             vmc.exe.restart();
         }
     }
