@@ -7,6 +7,7 @@
 package emulator.rm;
 
 import emulator.gui.RM;
+import static emulator.gui.RM.MEMORY_SIZE;
 import emulator.vm.VMController;
 import java.util.ArrayList;
 
@@ -18,9 +19,16 @@ public class RMController {
     
     ArrayList<VMController> vmcs = new ArrayList<>();
     RM rm = new RM();
+    Data data = new Data();
+    Registers registers;
     
     public RMController(ArrayList<VMController> _vmcs){
         vmcs = _vmcs;
+        registers = new Registers(this, data);
+        rm.setCHST(1, true);//for test
+        int ptBlock = MEMORY_SIZE - 16;
+        registers.setReg("PTR", String.valueOf(ptBlock));
+        
     }
     
     public void addVM(VMController vm){

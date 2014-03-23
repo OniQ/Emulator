@@ -6,19 +6,128 @@
 
 package emulator.gui;
 
+import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
+import java.awt.Color;
+import javax.swing.DefaultListModel;
+
+
 /**
  *
  * @author Oni-Q
  */
 public class RM extends javax.swing.JFrame {
 
-    /**
-     * Creates new form RM
-     */
+    private String[] memoryBuffer;
+    private final DefaultListModel listModel = new DefaultListModel();
+    public static final int MEMORY_SIZE = VIRTUAL_MEMORY_SIZE + 64;
+    
     public RM() {
         initComponents();
+        initMemory();
+    }
+    
+    private void initMemory(){
+        
+        memoryBuffer = new String[MEMORY_SIZE];
+        
+        for (int i = 0; i < MEMORY_SIZE; i++){
+            memoryBuffer[i] = "0000";
+            String _data = String.format("%03X: %s", i & 0xFFF, memoryBuffer[i]);
+            listModel.addElement(_data);
+        }
+        listMemory.setModel(listModel);
+    }
+    
+    public void setMemory(int adress, String word){
+        memoryBuffer[adress] = word;
+        String _data = String.format("%02X: %s", adress & 0xFF, memoryBuffer[adress]);
+        listModel.setElementAt(_data, adress);
+    }
+    
+    public void setMemory(String adressHex, String word){
+        int adress = Integer.parseInt(adressHex, 16);
+        setMemory(adress, word);
+    }
+    
+    public String getMemory(String adress){
+        return getMemory(Integer.parseInt(adress, 16));
+    }
+    
+    public String getMemory(int adress){
+        String word;
+        word = (String) listModel.get(adress);
+        word = word.substring(4);
+        return word;
+    }
+    
+    public void setD(String[] value){
+        D4.setText(value[0]);
+        D3.setText(value[1]);
+        D2.setText(value[2]);
+        D1.setText(value[3]);
+    }
+    
+    public void setR(String[] value) {
+        R4.setText(value[0]);
+        R3.setText(value[1]);
+        R2.setText(value[2]);
+        R1.setText(value[3]);
     }
 
+    public void setIC(String value) { 
+        IC1.setText(value);
+    }
+    
+    public void setC(boolean value) {
+        C.setText(String.valueOf(value));
+    }
+    
+    public void setIOI(String value) { 
+        IOI.setText(value);
+    }
+    
+    public void setSI(boolean value) {
+        SI.setText(String.valueOf(value));
+    }
+    
+    public void setTI(boolean value) {
+        TI.setText(String.valueOf(value));
+    }
+    
+    public void setPI(boolean value) {
+        TI.setText(String.valueOf(value));
+    }
+    
+    public void setCHST(int nr, boolean value) {
+        switch(nr){
+            case(1):
+                if (value)
+                    CHST1.setBackground(Color.red);
+                else
+                    CHST1.setBackground(Color.green);
+                break;
+            case(2):
+                if (value)
+                    CHST2.setBackground(Color.red);
+                else
+                    CHST2.setBackground(Color.green);
+                break;
+            case(3):
+                if (value)
+                    CHST3.setBackground(Color.red);
+                else
+                    CHST3.setBackground(Color.green);
+            break;
+        }
+    }
+    
+    public void setPTR(String[] value) {
+        PTR1.setText(value[0]);
+        PTR2.setText(value[1]);
+        PTR3.setText(value[2]);
+        PTR4.setText(value[3]);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,27 +154,27 @@ public class RM extends javax.swing.JFrame {
         C = new javax.swing.JLabel();
         IC2 = new javax.swing.JTextField();
         CHST1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        D5 = new javax.swing.JTextField();
-        D6 = new javax.swing.JTextField();
-        D7 = new javax.swing.JTextField();
-        D8 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        ST1 = new javax.swing.JLabel();
+        PTR = new javax.swing.JLabel();
+        PTR1 = new javax.swing.JTextField();
+        PTR2 = new javax.swing.JTextField();
+        PTR3 = new javax.swing.JTextField();
+        PTR4 = new javax.swing.JTextField();
+        HLP = new javax.swing.JLabel();
         CHST2 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        ST3 = new javax.swing.JLabel();
         CHST3 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        D9 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        D10 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        D11 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        D12 = new javax.swing.JTextField();
+        ST2 = new javax.swing.JLabel();
+        lPI = new javax.swing.JLabel();
+        PI = new javax.swing.JTextField();
+        lTI = new javax.swing.JLabel();
+        TI = new javax.swing.JTextField();
+        lSI = new javax.swing.JLabel();
+        SI = new javax.swing.JTextField();
+        lIOI = new javax.swing.JLabel();
+        IOI = new javax.swing.JTextField();
         C1 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lMODE = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listMemory = new javax.swing.JList();
 
@@ -173,149 +282,149 @@ public class RM extends javax.swing.JFrame {
         CHST1.setBackground(new java.awt.Color(51, 204, 0));
         CHST1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel7.setText("CHST1");
+        ST1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ST1.setText("CHST1");
 
         javax.swing.GroupLayout CHST1Layout = new javax.swing.GroupLayout(CHST1);
         CHST1.setLayout(CHST1Layout);
         CHST1Layout.setHorizontalGroup(
             CHST1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ST1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         CHST1Layout.setVerticalGroup(
             CHST1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(ST1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setText("PTR");
+        PTR.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        PTR.setText("PTR");
 
-        D5.setEditable(false);
-        D5.setForeground(new java.awt.Color(0, 51, 51));
-        D5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D5.setText("0");
-        D5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D5.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D5.setSelectionColor(new java.awt.Color(240, 240, 240));
+        PTR1.setEditable(false);
+        PTR1.setForeground(new java.awt.Color(0, 51, 51));
+        PTR1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PTR1.setText("0");
+        PTR1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PTR1.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        PTR1.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        D6.setEditable(false);
-        D6.setForeground(new java.awt.Color(0, 51, 51));
-        D6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D6.setText("0");
-        D6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D6.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D6.setSelectionColor(new java.awt.Color(240, 240, 240));
+        PTR2.setEditable(false);
+        PTR2.setForeground(new java.awt.Color(0, 51, 51));
+        PTR2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PTR2.setText("0");
+        PTR2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PTR2.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        PTR2.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        D7.setEditable(false);
-        D7.setForeground(new java.awt.Color(0, 51, 51));
-        D7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D7.setText("0");
-        D7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D7.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D7.setSelectionColor(new java.awt.Color(240, 240, 240));
+        PTR3.setEditable(false);
+        PTR3.setForeground(new java.awt.Color(0, 51, 51));
+        PTR3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PTR3.setText("0");
+        PTR3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PTR3.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        PTR3.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        D8.setEditable(false);
-        D8.setForeground(new java.awt.Color(0, 51, 51));
-        D8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D8.setText("0");
-        D8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D8.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D8.setSelectionColor(new java.awt.Color(240, 240, 240));
+        PTR4.setEditable(false);
+        PTR4.setForeground(new java.awt.Color(0, 51, 51));
+        PTR4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PTR4.setText("0");
+        PTR4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PTR4.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        PTR4.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("HLP");
-        jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        HLP.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        HLP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        HLP.setText("HLP");
+        HLP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         CHST2.setBackground(new java.awt.Color(51, 204, 0));
         CHST2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setText("CHST3");
+        ST3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ST3.setText("CHST3");
 
         javax.swing.GroupLayout CHST2Layout = new javax.swing.GroupLayout(CHST2);
         CHST2.setLayout(CHST2Layout);
         CHST2Layout.setHorizontalGroup(
             CHST2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ST3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         CHST2Layout.setVerticalGroup(
             CHST2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CHST2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(ST3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         CHST3.setBackground(new java.awt.Color(51, 204, 0));
         CHST3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("CHST2");
+        ST2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ST2.setText("CHST2");
 
         javax.swing.GroupLayout CHST3Layout = new javax.swing.GroupLayout(CHST3);
         CHST3.setLayout(CHST3Layout);
         CHST3Layout.setHorizontalGroup(
             CHST3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ST2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         CHST3Layout.setVerticalGroup(
             CHST3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CHST3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(ST2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel10.setText("PI");
+        lPI.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lPI.setText("PI");
 
-        D9.setEditable(false);
-        D9.setForeground(new java.awt.Color(0, 51, 51));
-        D9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D9.setText("0");
-        D9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D9.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D9.setSelectionColor(new java.awt.Color(240, 240, 240));
+        PI.setEditable(false);
+        PI.setForeground(new java.awt.Color(0, 51, 51));
+        PI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PI.setText("0");
+        PI.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PI.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        PI.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel11.setText("TI");
+        lTI.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lTI.setText("TI");
 
-        D10.setEditable(false);
-        D10.setForeground(new java.awt.Color(0, 51, 51));
-        D10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D10.setText("0");
-        D10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D10.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D10.setSelectionColor(new java.awt.Color(240, 240, 240));
+        TI.setEditable(false);
+        TI.setForeground(new java.awt.Color(0, 51, 51));
+        TI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TI.setText("0");
+        TI.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        TI.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        TI.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel12.setText("SI");
+        lSI.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lSI.setText("SI");
 
-        D11.setEditable(false);
-        D11.setForeground(new java.awt.Color(0, 51, 51));
-        D11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D11.setText("0");
-        D11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D11.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D11.setSelectionColor(new java.awt.Color(240, 240, 240));
+        SI.setEditable(false);
+        SI.setForeground(new java.awt.Color(0, 51, 51));
+        SI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        SI.setText("0");
+        SI.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        SI.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        SI.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel13.setText("IOI");
+        lIOI.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lIOI.setText("IOI");
 
-        D12.setEditable(false);
-        D12.setForeground(new java.awt.Color(0, 51, 51));
-        D12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        D12.setText("0");
-        D12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        D12.setSelectedTextColor(new java.awt.Color(0, 51, 51));
-        D12.setSelectionColor(new java.awt.Color(240, 240, 240));
+        IOI.setEditable(false);
+        IOI.setForeground(new java.awt.Color(0, 51, 51));
+        IOI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        IOI.setText("0");
+        IOI.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        IOI.setSelectedTextColor(new java.awt.Color(0, 51, 51));
+        IOI.setSelectionColor(new java.awt.Color(240, 240, 240));
 
         C1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         C1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         C1.setText("false");
         C1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel14.setText("MODE");
+        lMODE.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lMODE.setText("MODE");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -336,7 +445,7 @@ public class RM extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(C, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(171, 171, 171)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lMODE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(C1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14))
@@ -354,7 +463,7 @@ public class RM extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(R1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(HLP, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -362,26 +471,26 @@ public class RM extends javax.swing.JFrame {
                                             .addComponent(CHST1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(3, 3, 3)
-                                                .addComponent(jLabel10)
+                                                .addComponent(lPI)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(D9, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(PI, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(9, 9, 9)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(CHST3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel11)
+                                                .addComponent(lTI)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(D10, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(TI, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel12)
+                                                .addComponent(lSI)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(D11, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(SI, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel13)
+                                                .addComponent(lIOI)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(D12, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(IOI, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(CHST2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
@@ -394,22 +503,22 @@ public class RM extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(D1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel5)
+                                        .addComponent(PTR)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(D5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(PTR1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(D6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(PTR2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(D7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(PTR3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(D8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(PTR4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(HLP)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,17 +552,17 @@ public class RM extends javax.swing.JFrame {
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(C1)
-                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(lMODE, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(D9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(D10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(D11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13)
-                                    .addComponent(D12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lPI)
+                                    .addComponent(PI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lTI)
+                                    .addComponent(TI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lSI)
+                                    .addComponent(SI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lIOI)
+                                    .addComponent(IOI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(33, 33, 33)
                                 .addComponent(CHST1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -466,22 +575,22 @@ public class RM extends javax.swing.JFrame {
                         .addGap(3, 3, 3)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                                .addComponent(D5)
-                                .addComponent(D6)
-                                .addComponent(D7)
-                                .addComponent(D8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(PTR1)
+                                .addComponent(PTR2)
+                                .addComponent(PTR3)
+                                .addComponent(PTR4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(PTR, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(3, 3, 3)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        listMemory.setBackground(new java.awt.Color(200, 29, 92));
+        listMemory.setBackground(new java.awt.Color(230, 55, 120));
         listMemory.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
         listMemory.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listMemory.setToolTipText("");
         listMemory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        listMemory.setSelectionBackground(new java.awt.Color(255, 0, 51));
+        listMemory.setSelectionBackground(new java.awt.Color(255, 102, 153));
         listMemory.setSelectionForeground(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(listMemory);
 
@@ -552,39 +661,39 @@ public class RM extends javax.swing.JFrame {
     private javax.swing.JPanel CHST2;
     private javax.swing.JPanel CHST3;
     private javax.swing.JTextField D1;
-    private javax.swing.JTextField D10;
-    private javax.swing.JTextField D11;
-    private javax.swing.JTextField D12;
     private javax.swing.JTextField D2;
     private javax.swing.JTextField D3;
     private javax.swing.JTextField D4;
-    private javax.swing.JTextField D5;
-    private javax.swing.JTextField D6;
-    private javax.swing.JTextField D7;
-    private javax.swing.JTextField D8;
-    private javax.swing.JTextField D9;
+    private javax.swing.JLabel HLP;
     private javax.swing.JTextField IC1;
     private javax.swing.JTextField IC2;
+    private javax.swing.JTextField IOI;
+    private javax.swing.JTextField PI;
+    private javax.swing.JLabel PTR;
+    private javax.swing.JTextField PTR1;
+    private javax.swing.JTextField PTR2;
+    private javax.swing.JTextField PTR3;
+    private javax.swing.JTextField PTR4;
     private javax.swing.JTextField R1;
     private javax.swing.JTextField R2;
     private javax.swing.JTextField R3;
     private javax.swing.JTextField R4;
+    private javax.swing.JTextField SI;
+    private javax.swing.JLabel ST1;
+    private javax.swing.JLabel ST2;
+    private javax.swing.JLabel ST3;
+    private javax.swing.JTextField TI;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lIOI;
+    private javax.swing.JLabel lMODE;
+    private javax.swing.JLabel lPI;
+    private javax.swing.JLabel lSI;
+    private javax.swing.JLabel lTI;
     private javax.swing.JList listMemory;
     // End of variables declaration//GEN-END:variables
 }
