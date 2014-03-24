@@ -54,6 +54,12 @@ public class RMController {
         }
     }
     
+    public int getRealAdress(VMController vmc, int address){
+        int pt = pts.get(vmcs.indexOf(vmc));
+        int block = address / 16;
+        return Integer.parseInt(Memory.getMemory(rm, pt + block), 16)*16 + address - block*16;
+    }
+    
     public boolean memory(VMController vm, int address, String value){
         int pt = pts.get(vmcs.indexOf(vm));
         int block = address / 16;

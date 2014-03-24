@@ -37,6 +37,12 @@ public class VMController{
         test();
     }
     
+    public void reset(){
+        registers.reset();
+        vm.initMemory();
+        vm.clearConsole();
+    }
+    
     private void test(){
 //        Memory.setMemory(vm , 5, "2222");
 //        String s = Memory.getMemory(vm, 5);

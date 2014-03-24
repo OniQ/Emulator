@@ -35,14 +35,26 @@ public class ButtonHandler{
     }
     
     public void runApp(){
-        if (file != null){
-            vmc.exe.run();
+        try{
+            if (file != null){
+                vmc.exe.run();
+            }
+        }
+        catch (NumberFormatException e) { 
+            System.err.println(e);
+            vmc.reset();
         }
     }
     
     public void next(){
-        if (file != null)
-            vmc.exe.next();
+        try{
+            if (file != null)
+                vmc.exe.next();
+        }
+        catch (NumberFormatException e) { 
+            System.err.println(e);
+            vmc.reset();
+        }
     }
     
     public void back(){

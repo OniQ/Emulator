@@ -64,7 +64,7 @@ public class VM extends javax.swing.JFrame {
         return word;
     }
     
-    private void initMemory(){
+    public void initMemory(){
         data.memoryBuffer = new String[VIRTUAL_MEMORY_SIZE];
         
         for (int i = 0; i < VIRTUAL_MEMORY_SIZE; i++){

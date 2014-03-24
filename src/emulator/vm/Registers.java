@@ -13,6 +13,14 @@ public class Registers {
         data.C = false;
     }
     
+    public void reset(){
+        setReg("IC", "00");
+        Data.rmc.registers.setReg("IC", "000");
+        setReg("R", "00");
+        setReg("D", "0000");
+        setReg("C", false);
+    }
+    
     public void setReg(String reg, boolean value){
         if(reg.equals("C")){
             data.C = value;
@@ -61,7 +69,10 @@ public class Registers {
                 String _data = String.format("%02X", Integer.parseInt(value) & 0xFF);
                 data.IC = _data;
                 vmc.vm.setIC(data.IC);
-                Data.rmc.registers.setReg("IC", _data);
+                int va = Integer.parseInt(value);
+                int ra = Data.rmc.getRealAdress(vmc, va);
+                String rastr = String.format("%03X", ra & 0xFFF); 
+                Data.rmc.registers.setReg("IC", rastr);
                 break;
             default:
                 System.err.println("No register named " + reg);

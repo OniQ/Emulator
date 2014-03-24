@@ -23,12 +23,12 @@ public class Executor {
         if (!"HALT".equals(command)){
             try {
                 Thread.sleep(1);
-            } catch (InterruptedException ex) { }
-            int adress = Integer.parseInt(vmc.registers.getIC(), 16);
-            vmc.vm.setSelected(adress);
-            command = Memory.getMemory(vmc.vm, adress);
-            vmc.comInter.execute(command);
-            vmc.comInter.toNext();
+                int adress = Integer.parseInt(vmc.registers.getIC(), 16);
+                vmc.vm.setSelected(adress);
+                command = Memory.getMemory(vmc.vm, adress);
+                vmc.comInter.execute(command);
+                vmc.comInter.toNext();
+            } catch (InterruptedException e) { System.err.println(e); }
         }
     }
     
@@ -42,13 +42,13 @@ public class Executor {
         
     }
 
-    public synchronized void inputData(String data) {
+    public void inputData(String data) {
         command = data;
         try{
             vmc.comInter.execute(command);
         }
         catch(NumberFormatException e){
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
     }
 }
