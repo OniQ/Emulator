@@ -30,7 +30,7 @@ public class RMController {
         registers = new Registers(this, data);
         for (int i = 0; i < blocks.length; i++)
             blocks[i] = null;
-        rm.setCHST(1, true);//for test
+        //rm.setCHST(1, true);//for test
     }
     
     public void addVM(VMController vm){
@@ -73,7 +73,7 @@ public class RMController {
                 }
             }
             if (realBlock != null)
-                Memory.setMemory(rm, pt + block, realBlock);
+                Memory.setMemory(this, pt + block, realBlock);
             else{
                 System.err.println("Not enough memory");
                 return false;
@@ -81,7 +81,7 @@ public class RMController {
                 
         }
         int ra = Integer.parseInt(Memory.getMemory(rm, pt + block), 16)*16 + address - block*16;
-        Memory.setMemory(rm, ra, value);
+        Memory.setMemory(this, ra, value);
         return true;
     }
 }

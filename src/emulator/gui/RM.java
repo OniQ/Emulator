@@ -86,16 +86,16 @@ public class RM extends javax.swing.JFrame {
         IOI.setText(value);
     }
     
-    public void setSI(boolean value) {
-        SI.setText(String.valueOf(value));
+    public void setSI(String value) {
+        SI.setText(value);
     }
     
-    public void setTI(boolean value) {
-        TI.setText(String.valueOf(value));
+    public void setTI(String value) {
+        TI.setText(value);
     }
     
-    public void setPI(boolean value) {
-        TI.setText(String.valueOf(value));
+    public void setPI(String value) {
+        TI.setText(value);
     }
     
     public void setCHST(int nr, boolean value) {
@@ -160,9 +160,9 @@ public class RM extends javax.swing.JFrame {
         PTR3 = new javax.swing.JTextField();
         PTR4 = new javax.swing.JTextField();
         HLP = new javax.swing.JLabel();
-        CHST2 = new javax.swing.JPanel();
-        ST3 = new javax.swing.JLabel();
         CHST3 = new javax.swing.JPanel();
+        ST3 = new javax.swing.JLabel();
+        CHST2 = new javax.swing.JPanel();
         ST2 = new javax.swing.JLabel();
         lPI = new javax.swing.JLabel();
         PI = new javax.swing.JTextField();
@@ -327,40 +327,40 @@ public class RM extends javax.swing.JFrame {
         HLP.setText("HLP");
         HLP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        CHST2.setBackground(new java.awt.Color(51, 204, 0));
-        CHST2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-
-        ST3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ST3.setText("CHST3");
-
-        javax.swing.GroupLayout CHST2Layout = new javax.swing.GroupLayout(CHST2);
-        CHST2.setLayout(CHST2Layout);
-        CHST2Layout.setHorizontalGroup(
-            CHST2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ST3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        CHST2Layout.setVerticalGroup(
-            CHST2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CHST2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(ST3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
         CHST3.setBackground(new java.awt.Color(51, 204, 0));
         CHST3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        ST2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ST2.setText("CHST2");
+        ST3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ST3.setText("CHST3");
 
         javax.swing.GroupLayout CHST3Layout = new javax.swing.GroupLayout(CHST3);
         CHST3.setLayout(CHST3Layout);
         CHST3Layout.setHorizontalGroup(
             CHST3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ST2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ST3)
         );
         CHST3Layout.setVerticalGroup(
             CHST3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CHST3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(ST3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        CHST2.setBackground(new java.awt.Color(51, 204, 0));
+        CHST2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
+        ST2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ST2.setText("CHST2");
+
+        javax.swing.GroupLayout CHST2Layout = new javax.swing.GroupLayout(CHST2);
+        CHST2.setLayout(CHST2Layout);
+        CHST2Layout.setHorizontalGroup(
+            CHST2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ST2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        CHST2Layout.setVerticalGroup(
+            CHST2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CHST2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(ST2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -450,7 +450,7 @@ public class RM extends javax.swing.JFrame {
                                                 .addComponent(PI, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(9, 9, 9)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(CHST3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(CHST2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(lTI)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -465,7 +465,9 @@ public class RM extends javax.swing.JFrame {
                                                 .addComponent(lIOI)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(IOI, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(CHST2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(CHST3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -591,8 +593,8 @@ public class RM extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

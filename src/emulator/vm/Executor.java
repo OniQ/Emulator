@@ -28,7 +28,10 @@ public class Executor {
                 command = Memory.getMemory(vmc.vm, adress);
                 vmc.comInter.execute(command);
                 vmc.comInter.toNext();
-            } catch (InterruptedException e) { System.err.println(e); }
+            } catch (InterruptedException e) { 
+                System.err.println(e); 
+                Data.rmc.registers.setReg("PI", "3");
+            }
         }
     }
     

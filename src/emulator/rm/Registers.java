@@ -26,6 +26,10 @@ public class Registers {
             data.C = value;
             rmc.rm.setC(data.C);
         }
+        else if(reg.startsWith("CHST")){
+            int nr = Integer.parseInt(reg.substring(reg.length() - 1));
+            rmc.rm.setCHST(nr, value);
+        }
         else{
             System.err.println("No register named " + reg);
         }
@@ -73,11 +77,36 @@ public class Registers {
                 data.IC = value;
                 rmc.rm.setIC(data.IC);
                 break;
-            default:
-                System.err.println("No register named " + reg);
+            case("SI"):
+                data.SI = value;
+                rmc.rm.setSI(data.SI);
+                break;
+            case("PI"):
+                data.PI = value;
+                rmc.rm.setSI(data.PI);
+                break;
+            case("TI"):
+                data.TI = value;
+                rmc.rm.setSI(data.TI);
+                break;
         }
     }
-
+    
+    public void setIOI(int value, boolean state){
+        int ioi = Integer.parseInt(data.IOI);
+        if(state){
+            if ((ioi & value) == 0){
+                data.IOI = String.valueOf(ioi + value);
+            }
+        }
+        else{
+            if ((ioi & value) == value){
+                data.IOI = String.valueOf(ioi - value);
+            }
+        }
+        rmc.rm.setIOI(data.IOI);
+    }
+    
     public String getR() {
         return data.R[0] + data.R[1] + data.R[2] + data.R[3];
     }

@@ -25,6 +25,10 @@ public class CommandInterpreter {
     }
     
     public void execute(String command){
+        Data.rmc.registers.setReg("SI", "0");
+        Data.rmc.registers.setReg("PI", "0");
+        Data.rmc.registers.setReg("CHST2", false);
+        Data.rmc.registers.setIOI(2, false);
         if (command.length() != 4){
             System.err.println("Unsupported command: " + command);
         }
@@ -34,9 +38,17 @@ public class CommandInterpreter {
             switch(opcode){
                 case("PD"):
                     vmc.vm.writeToConsole(Memory.getMemory(vmc.vm, adress));
+                    Data.rmc.registers.setReg("SI", "2");
+                    Data.rmc.registers.setReg("CHST2", true);
+                    Data.rmc.registers.setIOI(2, true);
                     break;
                 case("GD"):
+                    Data.rmc.registers.setReg("SI", "1");
+                    Data.rmc.registers.setReg("CHST1", true);
+                    Data.rmc.registers.setIOI(1, true);
                     String data = vmc.vm.readData();
+                    Data.rmc.registers.setReg("CHST1", false);
+                    Data.rmc.registers.setIOI(1, false);
                     vmc.vm.writeToConsole(": " + data + vmc.newLine);
                     Memory.setMemory(vmc, adress, data);
                     break;
@@ -120,12 +132,14 @@ public class CommandInterpreter {
                     break;
                 }
                 case("HA"):
+                    Data.rmc.registers.setReg("SI", "3");
                     vmc.vm.writeToConsole(vmc.newLine + "Program terminated");
                     break;
                 case("00"):
                     //System.err.println("Empty memory");
                     break;
                 default:
+                    Data.rmc.registers.setReg("PI", "2");
                     System.err.println("Unsupported command: " + command);
             }
         }
