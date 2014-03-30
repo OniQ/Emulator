@@ -59,4 +59,11 @@ public class Memory {
         }
         return word;
     }
+    
+    public static String next(String address){
+        int intAddress = Integer.parseInt(address, 16) + 1;
+        if (intAddress > VIRTUAL_MEMORY_SIZE)
+            intAddress = 0;
+        return String.format("%02X", intAddress & 0xFF);
+    }
 }

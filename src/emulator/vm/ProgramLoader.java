@@ -24,23 +24,21 @@ public class ProgramLoader {
             while (fileScan.hasNext()){
                 command = fileScan.next();
                 if (command.equalsIgnoreCase("CODE") || command.equalsIgnoreCase("DATA")|| command.isEmpty()){
+                    continue;
                 }
                 else if (command.startsWith("#")){
-                    adress = Integer.parseInt(command.substring(1, 5));
+                    adress = Integer.parseInt(command.substring(1, 5), 16);
+                    continue;
                 }
                 else if (command.length() != 4){
-                    throw new DataFormatException("Wrong code");
+                    command = String.format("%-4s", command).replace(' ', '0');
                 }
-                else{
-                    Memory.setMemory(vmc, adress, command);
-                    adress++;
-                }
+                Memory.setMemory(vmc, adress, command);
+                adress++;
             }
         } 
-        catch (FileNotFoundException e) {
-        } 
-        catch (DataFormatException e) {
-            System.err.println(e.getMessage());
-        } 
+        catch (FileNotFoundException ex) {
+            System.err.println(ex);
+        }
     }
 }

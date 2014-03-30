@@ -24,6 +24,7 @@ public class RM extends javax.swing.JFrame {
     public RM() {
         initComponents();
         initMemory();
+        this.setResizable(false);
     }
     
     private void initMemory(){ 

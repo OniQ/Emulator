@@ -474,12 +474,6 @@ public class VM extends javax.swing.JFrame {
         if(selectedOption == 0)
         {
             _data = txt.getText();
-            while (_data.length() < 4){
-                _data = "0" + _data;
-            }
-            if(_data.length() > 4){
-                _data = _data.substring(0, 4);
-            }
         }
         return _data;
     }
