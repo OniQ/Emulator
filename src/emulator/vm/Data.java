@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package emulator.vm;
 
 import emulator.rm.RMController;
@@ -14,13 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author DELL
- */
 public class Data {
     public String[] memoryBuffer;
     public String[] R;
@@ -70,10 +58,7 @@ public class Data {
             if (!file.exists())
                 file.createNewFile();
             //in.add(new FileReader(file));
-            //System.out.println(c);
             //out.add(new PrintWriter(file));
-            //c = in.get(in.size() - 1).read();
-            //System.out.println(c);
             files.add(file);
         } catch (FileNotFoundException ex) {
             System.err.println(ex);

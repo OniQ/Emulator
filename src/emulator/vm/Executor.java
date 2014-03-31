@@ -1,9 +1,7 @@
 package emulator.vm;
 
-/**
- *
- * @author Oni-Q
- */
+import static emulator.vm.Data.rmc;
+
 public class Executor {
     
     VMController vmc;
@@ -23,9 +21,10 @@ public class Executor {
         if (!"HALT".equals(command)){
             try {
                 Thread.sleep(1);
-                int adress = Integer.parseInt(vmc.registers.getIC(), 16);
-                vmc.vm.setSelected(adress);
-                command = Memory.getMemory(vmc.vm, adress);
+                int address = Integer.parseInt(vmc.registers.getIC(), 16);
+                vmc.vm.setSelectedMemory(address);
+                rmc.setSelectedMemory(rmc.getRealAdress(vmc, address));
+                command = Memory.getMemory(vmc.vm, address);
                 vmc.comInter.execute(command);
                 vmc.comInter.toNext();
             } catch (InterruptedException e) { 
@@ -38,7 +37,7 @@ public class Executor {
     public void restart(){
         command = "";
         vmc.vm.clearConsole();
-        vmc.vm.setSelected(0);
+        vmc.vm.setSelectedMemory(0);
     }
     
     public void back(){

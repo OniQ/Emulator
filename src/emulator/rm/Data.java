@@ -1,9 +1,5 @@
 package emulator.rm;
 
-/**
- *
- * @author DELL
- */
 public class Data {
     public String[] R;
     public String[] D;

@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package emulator.rm;
 
 import emulator.gui.RM;
-import static emulator.gui.RM.MEMORY_SIZE;
+import static emulator.rm.Memory.BLOCK_SIZE;
+import static emulator.rm.Memory.MEMORY_SIZE;
+import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
 import emulator.vm.VMController;
 import java.util.ArrayList;
 
-/**
- *
- * @author Oni-Q
- */
 public class RMController {
     
     ArrayList<VMController> vmcs = new ArrayList<>();
@@ -30,7 +22,6 @@ public class RMController {
         registers = new Registers(this, data);
         for (int i = 0; i < blocks.length; i++)
             blocks[i] = null;
-        //rm.setCHST(1, true);//for test
     }
     
     public void addVM(VMController vm){
@@ -38,34 +29,42 @@ public class RMController {
         vm.run();
     }
     
+    public void setSelectedMemory(int id){
+        rm.setSelectedMemory(id);
+    }
+    
     public void run(){
         emulator.vm.Data.rmc = this;
         int ptBlock = MEMORY_SIZE;
         rm.run();
-        for(VMController ctrl : vmcs){
-            ptBlock -= 16;
-            if (Memory.getMemory(rm, ptBlock) != null){
+        for(VMController vmc : vmcs){
+            ptBlock -= BLOCK_SIZE;
+            if(ptBlock < VIRTUAL_MEMORY_SIZE){
+                System.err.println("Not enough memory for page table");
+                break;
+            }
+            else if (Memory.getMemory(rm, ptBlock) != null){
                 System.err.println("Not enough memory for page table");
                 break;
             }
             pts.add(ptBlock);
             registers.setReg("PTR", String.valueOf(ptBlock));
-            ctrl.run();
+            vmc.run();
         }
     }
     
     public int getRealAdress(VMController vmc, int address){
         int pt = pts.get(vmcs.indexOf(vmc));
-        int block = address / 16;
+        int block = address / BLOCK_SIZE;
         return Integer.parseInt(Memory.getMemory(rm, pt + block), 16)*16 + address - block*16;
     }
     
-    public boolean memory(VMController vm, int address, String value){
-        int pt = pts.get(vmcs.indexOf(vm));
-        int block = address / 16;
+    public boolean memory(VMController vmc, int address, String value){
+        int pt = pts.get(vmcs.indexOf(vmc));
+        int block = address / BLOCK_SIZE;
         if (Memory.getMemory(rm, pt + block) == null){
             String realBlock = null;
-            for (int i = 0; i < 16; i++){
+            for (int i = 0; i < BLOCK_SIZE; i++){
                 if (blocks[i] == null){
                     realBlock = String.format("%04X", i & 0xFFF);
                     blocks[i] = block;
@@ -80,7 +79,7 @@ public class RMController {
             }
                 
         }
-        int ra = Integer.parseInt(Memory.getMemory(rm, pt + block), 16)*16 + address - block*16;
+        int ra = getRealAdress(vmc, address);
         Memory.setMemory(this, ra, value);
         return true;
     }

@@ -17,7 +17,7 @@ public class Registers {
         data.IOI = "0";
         data.TI = "0";
         data.SI = "0";
-        data.MODE = "0";
+        data.MODE = "S";
         data.C = false;
     }
     
@@ -73,7 +73,6 @@ public class Registers {
                 System.err.println(reg + " value must be boolean");
                 break;
             case("IC"):
-                //String _data = String.format("%03X", Integer.parseInt(value, 16) & 0xFFF);
                 data.IC = value;
                 rmc.rm.setIC(data.IC);
                 break;
@@ -89,6 +88,11 @@ public class Registers {
                 data.TI = value;
                 rmc.rm.setSI(data.TI);
                 break;
+            case("MODE"):
+                if (value.equals("U") || value.equals("S")){
+                    data.MODE = value;
+                    rmc.rm.setMode(value);
+                }
         }
     }
     

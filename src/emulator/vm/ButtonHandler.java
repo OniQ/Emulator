@@ -3,10 +3,6 @@ package emulator.vm;
 import static emulator.vm.ProgramLoader.loadToMemory;
 import java.io.File;
 
-/**
- *
- * @author Oni-Q
- */
 public class ButtonHandler{
     
     VMController vmc;

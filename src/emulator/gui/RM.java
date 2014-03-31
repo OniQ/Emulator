@@ -1,25 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package emulator.gui;
 
+import static emulator.rm.Memory.MEMORY_SIZE;
 import static emulator.rm.Memory.memoryBuffer;
-import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
 import java.awt.Color;
 import javax.swing.DefaultListModel;
 
-
-/**
- *
- * @author Oni-Q
- */
 public class RM extends javax.swing.JFrame {
 
     private final DefaultListModel listModel = new DefaultListModel();
-    public static final int MEMORY_SIZE = VIRTUAL_MEMORY_SIZE + 64;
     
     public RM() {
         initComponents();
@@ -37,24 +25,24 @@ public class RM extends javax.swing.JFrame {
         listMemory.setModel(listModel);
     }
     
-    public void setMemory(int adress, String word){
-        memoryBuffer[adress] = word;
-        String _data = String.format("%03X: %s", adress & 0xFFF, memoryBuffer[adress]);
-        listModel.setElementAt(_data, adress);
+    public void setMemory(int address, String word){
+        memoryBuffer[address] = word;
+        String _data = String.format("%03X: %s", address & 0xFFF, memoryBuffer[address]);
+        listModel.setElementAt(_data, address);
     }
     
-    public void setMemory(String adressHex, String word){
-        int adress = Integer.parseInt(adressHex, 16);
+    public void setMemory(String addressHex, String word){
+        int adress = Integer.parseInt(addressHex, 16);
         setMemory(adress, word);
     }
     
-    public String getMemory(String adress){
-        return getMemory(Integer.parseInt(adress, 16));
+    public String getMemory(String address){
+        return getMemory(Integer.parseInt(address, 16));
     }
     
-    public String getMemory(int adress){
+    public String getMemory(int address){
         String word;
-        word = (String) listModel.get(adress);
+        word = (String) listModel.get(address);
         word = word.substring(5);
         if (word.equals("null"))
             return null;
@@ -99,6 +87,10 @@ public class RM extends javax.swing.JFrame {
         TI.setText(value);
     }
     
+    public void setMode(String value){
+        lMODE.setText(value);
+    }
+    
     public void setCHST(int nr, boolean value) {
         switch(nr){
             case(1):
@@ -129,6 +121,11 @@ public class RM extends javax.swing.JFrame {
         PTR4.setText(value[3]);
     }
     
+    public void setSelectedMemory(int id){
+        listMemory.setSelectedIndex(id);
+        listMemory.ensureIndexIsVisible(id);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,6 +134,7 @@ public class RM extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -179,6 +177,9 @@ public class RM extends javax.swing.JFrame {
         listMemory = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("Real Machine"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
+        bindingGroup.addBinding(binding);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registers", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 51, 51))); // NOI18N
 
@@ -609,6 +610,8 @@ public class RM extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -686,5 +689,6 @@ public class RM extends javax.swing.JFrame {
     private javax.swing.JLabel lSI;
     private javax.swing.JLabel lTI;
     private javax.swing.JList listMemory;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

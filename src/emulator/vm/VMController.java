@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package emulator.vm; 
 
 import emulator.gui.VM;
 
-/**
- *
- * @author Oni-Q
- */
 public class VMController{
     
     final VM vm;
@@ -34,7 +24,7 @@ public class VMController{
     
     public void run(){
         vm.run();
-        test();
+        //test();
     }
     
     public void reset(){
@@ -43,11 +33,11 @@ public class VMController{
         vm.clearConsole();
     }
     
-    private void test(){
+//    private void test(){
 //        Memory.setMemory(vm , 5, "2222");
 //        String s = Memory.getMemory(vm, 5);
 //        registers.setReg("C", false);
 //        System.out.println(registers.getR());
 //        System.out.println(s);
-    }
+//    }
 }

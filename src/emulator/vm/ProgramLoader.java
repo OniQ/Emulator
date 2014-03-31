@@ -1,17 +1,11 @@
 package emulator.vm;
 
-import emulator.gui.VM;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
-import java.util.zip.DataFormatException;
 
-/**
- *
- * @author Oni-Q
- */
 public class ProgramLoader {
     
     static public void loadToMemory(VMController vmc, File file){

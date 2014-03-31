@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package emulator.gui;
 
 import emulator.vm.ButtonHandler;
@@ -19,10 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
-/**
- *
- * @author Oni-Q
- */
 public class VM extends javax.swing.JFrame {
     JFileChooser fc = new JFileChooser(); 
     ButtonHandler buttonsHandler;
@@ -42,29 +32,29 @@ public class VM extends javax.swing.JFrame {
     
     private final DefaultListModel listModel = new DefaultListModel();
     
-    public void setMemory(int adress, String word){
-        this.data.memoryBuffer[adress] = word;
-        String _data = String.format("%02X: %s", adress & 0xFF, this.data.memoryBuffer[adress]);
-        listModel.setElementAt(_data, adress);
+    public void setMemory(int address, String word){
+        this.data.memoryBuffer[address] = word;
+        String _data = String.format("%02X: %s", address & 0xFF, this.data.memoryBuffer[address]);
+        listModel.setElementAt(_data, address);
     }
     
     public void setMemory(String adressHex, String word){
-        int adress = Integer.parseInt(adressHex, 16);
-        setMemory(adress, word);
+        int address = Integer.parseInt(adressHex, 16);
+        setMemory(address, word);
     }
     
-    public String getMemory(String adress){
-        return getMemory(Integer.parseInt(adress, 16));
+    public String getMemory(String address){
+        return getMemory(Integer.parseInt(address, 16));
     }
     
-    public String getMemory(int adress){
+    public String getMemory(int address){
         String word;
-        word = (String) listModel.get(adress);
+        word = (String) listModel.get(address);
         word = word.substring(4);
         return word;
     }
     
-    public void initMemory(){
+    public final void initMemory(){
         data.memoryBuffer = new String[VIRTUAL_MEMORY_SIZE];
         
         for (int i = 0; i < VIRTUAL_MEMORY_SIZE; i++){
@@ -457,7 +447,7 @@ public class VM extends javax.swing.JFrame {
         output.setText(""); 
     }
     
-    public void setSelected(int id){
+    public void setSelectedMemory(int id){
         listMemory.setSelectedIndex(id);
     }
     

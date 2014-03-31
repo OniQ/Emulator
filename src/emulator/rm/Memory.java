@@ -1,15 +1,12 @@
 package emulator.rm;
 
 import emulator.gui.RM;
-import static emulator.gui.RM.MEMORY_SIZE;
+import static emulator.vm.Memory.VIRTUAL_MEMORY_SIZE;
 
-/**
- *
- * @author Oni-Q
- */
 public class Memory {
-    public static final int VIRTUAL_MEMORY_SIZE = 256;
+    public static final int MEMORY_SIZE = VIRTUAL_MEMORY_SIZE + 64;
     public static String[] memoryBuffer = new String[MEMORY_SIZE];
+    public static final int BLOCK_SIZE = 16;
     
     public static void setMemory(RMController rmc, int adress, String word){
         if (word.length() != 4){
