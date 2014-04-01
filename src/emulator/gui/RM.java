@@ -88,7 +88,7 @@ public class RM extends javax.swing.JFrame {
     }
     
     public void setMode(String value){
-        lMODE.setText(value);
+        MODE.setText(value);
     }
     
     public void setCHST(int nr, boolean value) {
@@ -171,7 +171,7 @@ public class RM extends javax.swing.JFrame {
         SI = new javax.swing.JTextField();
         lIOI = new javax.swing.JLabel();
         IOI = new javax.swing.JTextField();
-        C1 = new javax.swing.JLabel();
+        MODE = new javax.swing.JLabel();
         lMODE = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listMemory = new javax.swing.JList();
@@ -411,10 +411,10 @@ public class RM extends javax.swing.JFrame {
         IOI.setSelectedTextColor(new java.awt.Color(0, 51, 51));
         IOI.setSelectionColor(new java.awt.Color(240, 240, 240));
 
-        C1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        C1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        C1.setText("false");
-        C1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        MODE.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        MODE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        MODE.setText("U");
+        MODE.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lMODE.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lMODE.setText("MODE");
@@ -504,7 +504,7 @@ public class RM extends javax.swing.JFrame {
                         .addGap(171, 171, 171)
                         .addComponent(lMODE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(C1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(MODE, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)))
                 .addContainerGap())
         );
@@ -544,7 +544,7 @@ public class RM extends javax.swing.JFrame {
                                     .addComponent(C)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(C1)
+                                        .addComponent(MODE)
                                         .addComponent(lMODE, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -651,7 +651,6 @@ public class RM extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel C;
-    private javax.swing.JLabel C1;
     private javax.swing.JPanel CHST1;
     private javax.swing.JPanel CHST2;
     private javax.swing.JPanel CHST3;
@@ -662,6 +661,7 @@ public class RM extends javax.swing.JFrame {
     private javax.swing.JLabel HLP;
     private javax.swing.JTextField IC1;
     private javax.swing.JTextField IOI;
+    private javax.swing.JLabel MODE;
     private javax.swing.JTextField PI;
     private javax.swing.JLabel PTR;
     private javax.swing.JTextField PTR1;

@@ -12,7 +12,6 @@ public class Main {
             VMController vmc = new VMController();
             vmcs.add(vmc);
         }
-        
         RMController rmc = new RMController(vmcs);
         rmc.run();
     }

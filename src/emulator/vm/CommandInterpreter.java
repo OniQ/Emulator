@@ -34,6 +34,7 @@ public class CommandInterpreter {
         Data.rmc.registers.setReg("CHST3", false);
         Data.rmc.registers.setIOI(2, false);
         Data.rmc.registers.setIOI(3, false);
+        //Data.rmc.registers.setReg("MODE", "S");
         if (command.length() != 4){
             System.err.println("Unsupported command: " + command);
         }
